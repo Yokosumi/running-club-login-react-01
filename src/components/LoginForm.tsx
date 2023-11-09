@@ -34,6 +34,8 @@ export const LoginForm = () => {
       if (inputPasswordRef.current) {
         inputPasswordRef.current.focus();
       }
+    } else {
+      alert("loggin in");
     }
   };
   return (
