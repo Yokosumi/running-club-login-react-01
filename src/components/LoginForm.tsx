@@ -1,25 +1,21 @@
 import { useState, useRef } from "react";
 import * as config from "../config";
 
-export const LoginForm = () => {
+interface IProps {
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
+}
+
+export const LoginForm = ({ setIsLoggedIn }: IProps) => {
   const [formData, setFormData] = useState(config.initialFormData);
   const [legend, setLegend] = useState("Welcome");
   const inputLoginRef = useRef<HTMLInputElement>(null);
   const inputPasswordRef = useRef<HTMLInputElement>(null);
 
-  const handleLoginChange = (login: string) => {
-    // hier wird ein deep clone von formData erstellt
-    const _formData = structuredClone(formData);
-    //hier wird der clone an den login prop gegeben
-    _formData.login = login;
-    //hier wird der clone gesetzt
-    setFormData(_formData);
-    setLegend(config.initialLegend);
-  };
-  const handlePasswordChange = (password: string) => {
-    const _formData = structuredClone(formData);
-    _formData.password = password;
-    setFormData(_formData);
+  const handleFieldChange = (fieldName: string, value: string) => {
+    setFormData({
+      ...formData,
+      [fieldName]: value,
+    });
     setLegend(config.initialLegend);
   };
 
@@ -35,7 +31,7 @@ export const LoginForm = () => {
         inputPasswordRef.current.focus();
       }
     } else {
-      alert("loggin in");
+      setIsLoggedIn(true);
     }
   };
   return (
@@ -52,7 +48,7 @@ export const LoginForm = () => {
           ref={inputLoginRef}
           id="login"
           value={formData.login}
-          onChange={(e) => handleLoginChange(e.target.value)}
+          onChange={(e) => handleFieldChange("login", e.target.value)}
         />
       </div>
 
@@ -65,7 +61,7 @@ export const LoginForm = () => {
           ref={inputPasswordRef}
           id="password"
           value={formData.password}
-          onChange={(e) => handlePasswordChange(e.target.value)}
+          onChange={(e) => handleFieldChange("password", e.target.value)}
         />
       </div>
 
