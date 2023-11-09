@@ -5,6 +5,7 @@ export const LoginForm = () => {
   const [formData, setFormData] = useState(config.initialFormData);
   const [legend, setLegend] = useState("Welcome");
   const inputLoginRef = useRef<HTMLInputElement>(null);
+  const inputPasswordRef = useRef<HTMLInputElement>(null);
 
   const handleLoginChange = (login: string) => {
     // hier wird ein deep clone von formData erstellt
@@ -13,11 +14,13 @@ export const LoginForm = () => {
     _formData.login = login;
     //hier wird der clone gesetzt
     setFormData(_formData);
+    setLegend(config.initialLegend);
   };
   const handlePasswordChange = (password: string) => {
     const _formData = structuredClone(formData);
     _formData.password = password;
     setFormData(_formData);
+    setLegend(config.initialLegend);
   };
 
   const handleFormSubmit = () => {
@@ -25,6 +28,11 @@ export const LoginForm = () => {
       setLegend("Login was incorrect");
       if (inputLoginRef.current) {
         inputLoginRef.current.focus();
+      }
+    } else if (formData.password !== config.user.password) {
+      setLegend("Password was incorrect");
+      if (inputPasswordRef.current) {
+        inputPasswordRef.current.focus();
       }
     }
   };
@@ -52,6 +60,7 @@ export const LoginForm = () => {
         </label>
         <input
           type="password"
+          ref={inputPasswordRef}
           id="password"
           value={formData.password}
           onChange={(e) => handlePasswordChange(e.target.value)}
