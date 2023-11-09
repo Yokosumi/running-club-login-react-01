@@ -1,6 +1,6 @@
 export const LoginForm = () => {
   return (
-    <fieldset className="border border-gray-500 p-4 w-full rounded">
+    <fieldset className="border border-gray-500 p-4 w-full rounded bg-slate-300 bg-opacity-50">
       <legend>Welcome</legend>
 
       <div className="mb-4 flex gap-2">
